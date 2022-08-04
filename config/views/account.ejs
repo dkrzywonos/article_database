@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <%- include('./partials/head'); %>
+</head>
+<body>
+  <header>
+    <%- include('./partials/header'); %>
+  </header>
+  <main>
+      <section id="content">
+        <div class="contentTitle">
+          <h2>Moje konto</h2>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="accountName">
+              <h3><%= name %></h3>
+            </div>
+
+          </div>
+          <div class="col-md-9">
+            <% articles.forEach(function(article){ %>
+            <form class="" action="/removeArticleForUser?id=<%=article._id %>" method="post">
+              <div class="searchResult" id="<%=JSON.stringify(article._id)%>">
+                <h3><%= article.title %></h3>
+                <p class='author'><%= article.author.join(', ') %></p>
+                <div class='abstract hideContent'>
+                  <p>Opis: <%= article.abstract %></p>
+                </div>
+                <div class="show-more">
+                  <button class="btn btn-outline-dark">Pokaż więcej</button>
+                </div>
+                <p class='keywords'>Słowa kluczowe: <%= article.keywords.join(', ') %></p>
+                <p class="dateAndPublisher"><%= article.date.toLocaleDateString("pl-PL") %> | <%= article.publisher %></p>
+
+                <button type="submit" class="btn btn-dark btn-block mb-4" name="button">Usuń artykuł</button>
+              </div>
+
+
+            </form>
+            <% }) %>
+
+      </section>
+            <script>
+            $(".show-more button").on("click", function() {
+                var $this = $(this);
+                var $content = $this.parent().prev(".abstract");
+                var linkText = $this.text().toUpperCase();
+
+                if(linkText === "POKAŻ WIĘCEJ"){
+                    linkText = "Pokaż mniej";
+                    $content.toggleClass("showContent");
+                    $content.toggleClass("hideContent");
+                } else {
+                    linkText = "Pokaż więcej";
+                    $content.toggleClass("showContent");
+                    $content.toggleClass("hideContent");
+                };
+
+                $this.text(linkText);
+                return false;
+            });
+            </script>
+          </div>
+        </div>
+      </section>
+  </main>
+    <%- include('./partials/scripts'); %>
+  <footer>
+    <%- include('./partials/footer'); %>
+  </footer>
+</body>

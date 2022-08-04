@@ -1,0 +1,2 @@
+DB_STRING=mongodb+srv://admin1:admin@cluster0.quhds.mongodb.net/articleBase?retryWrites=true&w=majority
+SECRET=secret

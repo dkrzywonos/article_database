@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <%- include('./partials/head'); %>
+</head>
+<body>
+  <header>
+    <%- include('./partials/header'); %>
+  </header>
+  <main>
+    <section id="content">
+      <div class="contentTitle">
+        <h2>Wyszukaj artykuł</h2>
+      </div>
+      <form method="post" action="/search">
+        <div class="row g-2" style="margin-bottom: 1.5rem">
+          <div class="col-md">
+            <label for="articleTitle" class="form-label">Tytuł:</label><br>
+            <input type="text" class="form-control" id="articleTitle" name="articleTitle" placeholder="Wpisz tytuł artykułu lub jego fragment">
+          </div>
+          <div class="col-md">
+            <label for="articleAuthor" class="form-label">Autor:</label><br>
+            <input type="text" class="form-control" id="articleAuthor" name="articleAuthor" placeholder="Wpisz nazwisko autora">
+          </div>
+        </div>
+        <div class="row g-2" style="margin-bottom: 1.5rem">
+          <div class="col-md-6">
+            <label for="keywords" class="form-label">Słowa kluczowe:</label><br>
+            <input type="text" class="form-control" id="keywords" name="keywords" placeholder="Wpisz słowa kluczowe oddzielone przecinkiem">
+          </div>
+          <div class="col-md-3">
+            <div id="datePicker" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+              <label for="startDate" class="form-label">Od:</label>
+              <input type="date" id="startDate" name="startDate" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div id="datePicker" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+              <label for="endtDate" class="form-label">Do: </label>
+              <input type="date" id="endDate" name="endDate" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row g-2" style="margin-bottom: 2rem">
+        <div class="col-md-6">
+          <label for="publisher" class="form-label">Wydawnictwo:</label>
+          <input class="form-control" type="text" id="publisher" name="publisher" placeholder="Wpisz nazwę wydawnictwa">
+        </div>
+        </div>
+
+        <button type="submit" class="btn btn-dark btn-block mb-4">Szukaj</button>
+      </form>
+
+    <% articles.forEach(function(article){ %>
+    <form class="" action="/saveArticleForUser?id=<%=article._id %>" method="post">
+      <div class="searchResult" id="<%=article._id %>">
+        <div class="row">
+          <div class="col-md-10">
+            <h3><%= article.title %></h3>
+            <p class='author'><%= article.author.join(', ') %></p>
+            <div class='abstract hideContent'>
+              <p>Opis: <%= article.abstract %></p>
+            </div>
+            <div class="show-more">
+              <button class="btn btn-outline-dark">Pokaż więcej</button>
+            </div>
+            <p class='keywords'>Słowa kluczowe: <%= article.keywords.join(', ') %></p>
+            <p class="dateAndPublisher"><%= article.date.toLocaleDateString("pl-PL") %> | <%= article.publisher %></p>
+          </div>
+          <% if (user){ %>
+          <div class="saveButton col-md-2">
+            <button type="submit" class="btn btn-dark btn-block mb-4" name="button">Zapisz artykuł</button>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </form>
+
+    <% }) %>
+
+    </section>
+
+    <script>
+    $(".show-more button").on("click", function() {
+        var $this = $(this);
+        var $content = $this.parent().prev(".abstract");
+        var linkText = $this.text().toUpperCase();
+
+        if(linkText === "POKAŻ WIĘCEJ"){
+            linkText = "Pokaż mniej";
+            $content.toggleClass("showContent");
+            $content.toggleClass("hideContent");
+        } else {
+            linkText = "Pokaż więcej";
+            $content.toggleClass("showContent");
+            $content.toggleClass("hideContent");
+        };
+
+        $this.text(linkText);
+        return false;
+    });
+    </script>
+
+
+    <%- include('./partials/scripts'); %>
+  </main>
+  <footer>
+    <%- include('./partials/footer'); %>
+  </footer>
+</body>
+
+</html>

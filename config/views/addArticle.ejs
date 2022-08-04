@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <%- include('./partials/head'); %>
+</head>
+
+<body>
+  <header>
+    <%- include('./partials/header'); %>
+  </header>
+  <main>
+    <section id="content">
+      <div class="contentTitle">
+        <h2>Dodaj artykuł do bazy</h2>
+      </div>
+      <form method="post" action="/add">
+        <div class="row g-2" style="margin-bottom: 1.5rem">
+          <div class="col-md">
+            <label for="articleTitle" class="form-label">Tytuł:</label><br>
+            <input type="text" class="form-control" id="articleTitle" name="articleTitle" placeholder="Wpisz tytuł artykułu">
+          </div>
+          <div class="col-md">
+            <label for="articleAuthor" class="form-label">Autor:</label><br>
+            <input type="text" class="form-control" id="articleAuthor" name="articleAuthor" placeholder="Wpisz autora lub autorów">
+          </div>
+        </div>
+        <div class="row g-2" style="margin-bottom: 2rem">
+          <div class="col-md-6">
+            <label for="keywords" class="form-label">Słowa kluczowe:</label><br>
+            <input type="text" class="form-control" id="keywords" name="keywords" placeholder="Wpisz słowa kluczowe oddzielone przecinkiem">
+          </div>
+          <div class="col-md-3">
+            <label for="publisher" class="form-label">Wydawnictwo:</label>
+            <input class="form-control" type="text" id="publisher" name="publisher" placeholder="Wpisz nazwę wydawnictwa">
+          </div>
+          <div class="col-md-3">
+            <div id="datePicker" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+              <label for="publication" class="form-label">Data publikacji:</label>
+              <input type="date" id="publication" name="publication" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row g-2" style="margin-bottom: 2rem">
+          <div >
+            <label for="abstract" class="form-label">Opis:</label>
+            <textarea type="text" class="form-control" id="abstract" name="abstract" rows="6"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark btn-block mb-4">Dodaj</button>
+      </form>
+      <div><%= statusAdd %></div>
+
+    </section>
+
+
+    <%- include('./partials/scripts'); %>
+  </main>
+  <footer>
+    <%- include('./partials/footer'); %>
+  </footer>
+</body>
+</html>
